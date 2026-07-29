@@ -1,0 +1,56 @@
+name: CI
+
+# :local/root and the nbb --classpath both resolve against the monorepo
+# layout, so each job reconstructs it by checking out the kotoba-lang/dynamics
+# sibling (PUBLIC, no token needed) into the expected relative path.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: "21" }
+      - uses: DeLaGuardo/setup-clojure@13.4
+        with: { cli: latest }
+      - name: clj-kondo (errors fail the build)
+        run: clojure -M:lint
+
+  test-nbb:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { path: orgs/cloud-itonami/cloud-itonami-pooled-incidence }
+      - uses: actions/checkout@v4
+        with:
+          repository: kotoba-lang/dynamics
+          path: orgs/kotoba-lang/dynamics
+      - uses: actions/setup-node@v4
+        with: { node-version: "22" }
+      - run: npm install -g nbb
+      - name: nbb test
+        working-directory: orgs/cloud-itonami/cloud-itonami-pooled-incidence
+        run: nbb --classpath "src:test:../../kotoba-lang/dynamics/src" test/run_tests.cljs
+
+  test-jvm:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { path: orgs/cloud-itonami/cloud-itonami-pooled-incidence }
+      - uses: actions/checkout@v4
+        with:
+          repository: kotoba-lang/dynamics
+          path: orgs/kotoba-lang/dynamics
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: "21" }
+      - uses: DeLaGuardo/setup-clojure@13.4
+        with: { cli: latest }
+      - name: test
+        working-directory: orgs/cloud-itonami/cloud-itonami-pooled-incidence
+        run: clojure -M:test
