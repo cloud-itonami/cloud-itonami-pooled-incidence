@@ -58,7 +58,7 @@
   covers, and is NOT a per-member rate -- no member may cite it as its own.
   This library reports `:members` on every result so that a reader can
   always see how many distinct members a claim rests on."
-  (:require [clojure.string :as str]
+  (:require [kotoba.lang.text :as str]
             [dynamics.core :as dyn]))
 
 ;; ---------------------------------------------------------------------------
