@@ -126,7 +126,7 @@ below target but cannot be bounded.
 
 ```bash
 # nbb (the workspace's mandated script host)
-nbb --classpath "src:test:../../kotoba-lang/dynamics/src" test/run_tests.cljs
+nbb --classpath "src:test:../../kotoba-lang/dynamics/src" test/run_tests.cljk
 
 # JVM, for consumers that reach this library through deps.edn
 clojure -M:test
