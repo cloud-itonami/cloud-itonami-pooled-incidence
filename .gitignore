@@ -2,3 +2,4 @@
 /target
 *.class
 /node_modules
+.nbb/
