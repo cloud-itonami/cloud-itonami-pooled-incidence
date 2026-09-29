@@ -27,7 +27,7 @@ A plain `.cljc` function library, no actor, no I/O, no ledger — the
 
 **Statistics are delegated, not reimplemented.** The zero-event bound is
 `dynamics.core/upper-bound-rate-from-zero-events`. Per the workspace rule
-in `com-junkawasaki/root` CLAUDE.md (ADR-2607203000), scoring truth lives
+in `com-junkawasaki/root` AGENTS.md (ADR-2607203000), scoring truth lives
 in `kotoba-lang/dynamics` and consumers must not grow a second copy.
 `exposure-floor` is the algebraic inverse of that same function, so the
 two cannot disagree.
